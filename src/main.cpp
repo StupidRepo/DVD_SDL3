@@ -81,18 +81,12 @@ int main() {
 					255
 				};
 
-				if (!DidHitCornerPerfectly(dvd)) {
-					PlaySound(bounceSound);
-				} else {
-					PlaySound(perfectCornerHitSound);
-				}
+				PlaySound(bounceSound);
 			}
 			DrawTextureV(dvdLogo, dvd.position, dvd.color);
 		EndDrawing();
 	}
 
 	UnloadTexture(dvdLogo);
-
-	UnloadSound(perfectCornerHitSound);
 	UnloadSound(bounceSound);
 }
