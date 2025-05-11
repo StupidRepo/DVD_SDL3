@@ -23,4 +23,4 @@ This should (*hopefully*) be cross-platform on anything that Raylib supports.
 2. Do CMake stuff to build
 3. You probably need Ninja, idk
 
-   # texture_width = static_cast<float>(texture->w) * (TEXTURE_SIZE / static_cast<float>(texture->h));
+[mbranch]: https://github.com/StupidRepo/DVD_SDL3/tree/main
