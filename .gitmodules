@@ -1,9 +1,9 @@
-[submodule "SDL"]
-	path = SDL
-	url = https://github.com/libsdl-org/SDL.git
-[submodule "SDL_image"]
-	path = SDL_image
+[submodule "libs/sdl"]
+	path = libs/sdl
+	url = https://github.com/libsdl-org/SDL
+[submodule "libs/sdl_image"]
+	path = libs/sdl_image
 	url = https://github.com/libsdl-org/SDL_image
-[submodule "SDL_mixer"]
-	path = SDL_mixer
+[submodule "libs/sdl_mixer"]
+	path = libs/sdl_mixer
 	url = https://github.com/libsdl-org/SDL_mixer
