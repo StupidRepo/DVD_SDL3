@@ -1,4 +1,5 @@
 #define SDL_MAIN_USE_CALLBACKS 1
+#include <cmath>
 #include <cstdio>
 #include <cstdlib>
 
@@ -31,7 +32,6 @@ static float texture_height = TEXTURE_SIZE;
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
 	SDL_Surface *surface = nullptr;
-	SDL_AudioSpec spec = {MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, MIX_DEFAULT_FREQUENCY};
 
 	SDL_SetAppMetadata("DVD Bounce", "1.0", "io.github.stupidrepo.dvdbounce");
 
@@ -45,15 +45,16 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
 		return SDL_APP_FAILURE;
 	}
 
-	if (!Mix_OpenAudio(0, &spec)) {
+	// init SDL Mixer
+	SDL_AudioDeviceID audio_device = SDL_OpenAudioDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, nullptr);
+	if (!audio_device) {
+		SDL_Log("Couldn't open audio device: %s", SDL_GetError());
+		return SDL_APP_FAILURE;
+	}
+	if (!Mix_OpenAudio(audio_device, nullptr)) {
 		SDL_Log("Couldn't open audio: %s", SDL_GetError());
 		return SDL_APP_FAILURE;
 	}
-	Mix_QuerySpec(&spec.freq, &spec.format, &spec.channels);
-	SDL_Log("Opened audio at %d Hz %d bit%s %s audio buffer\n", spec.freq,
-	        (spec.format&0xFF),
-	        (SDL_AUDIO_ISFLOAT(spec.format) ? " (float)" : ""),
-	        (spec.channels > 2) ? "surround" : (spec.channels > 1) ? "stereo" : "mono");
 	/* boilerplate END */
 
 	last_time = SDL_GetTicks();
@@ -100,6 +101,20 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
 	if (event->type == SDL_EVENT_QUIT) {
 		return SDL_APP_SUCCESS;
 	}
+
+	if (event->type == SDL_EVENT_KEY_UP) {
+		if (event->key.key == SDLK_F) {
+			const bool was_fullscreen = (SDL_GetWindowFlags(window) & SDL_WINDOW_FULLSCREEN);
+
+			SDL_SetWindowFullscreen(window, was_fullscreen ? false : SDL_WINDOW_FULLSCREEN);
+
+			const bool did_manage_to_toggle_vis = !was_fullscreen ? SDL_HideCursor() : SDL_ShowCursor();
+			if (!did_manage_to_toggle_vis) {
+				SDL_Log("Couldn't toggle cursor visibility: %s", SDL_GetError());
+			}
+		}
+	}
+
 
 	return SDL_APP_CONTINUE;
 }
