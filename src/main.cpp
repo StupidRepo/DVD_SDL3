@@ -1,8 +1,8 @@
 #include <raylib.h>
 #include <cstdlib>
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
+#define INITIAL_WIDTH 1280
+#define INITIAL_HEIGHT 720
 
 #define TEXTURE_SIZE 128.0f // size of texture in px
 #define TEXTURE_SPEED 100.0f // speed of texture in px/s
@@ -16,6 +16,9 @@ struct DVD {
 	Color color;
 };
 
+static int windowWidth = INITIAL_WIDTH;
+static int windowHeight = INITIAL_HEIGHT;
+
 bool UpdateDVDPosition(DVD &dvd) {
 	dvd.position.x += dvd.direction.x * TEXTURE_SPEED * GetFrameTime();
 	dvd.position.y += dvd.direction.y * TEXTURE_SPEED * GetFrameTime();
@@ -23,28 +26,19 @@ bool UpdateDVDPosition(DVD &dvd) {
 	const bool xBelowZero = (dvd.position.x < 0.0f);
 	const bool yBelowZero = (dvd.position.y < 0.0f);
 
-	if (xBelowZero || dvd.position.x + dvd.texture_size.x > WINDOW_WIDTH) {
-		dvd.position.x = xBelowZero ? 0.0f : WINDOW_WIDTH - dvd.texture_size.x;
+	if (xBelowZero || dvd.position.x + dvd.texture_size.x > windowWidth) {
+		dvd.position.x = xBelowZero ? 0.0f : windowWidth - dvd.texture_size.x;
 		dvd.direction.x *= -1;
 		return true;
 	}
 
-	if (yBelowZero || dvd.position.y + dvd.texture_size.y > WINDOW_HEIGHT) {
-		dvd.position.y = yBelowZero ? 0.0f : WINDOW_HEIGHT - dvd.texture_size.y;
+	if (yBelowZero || dvd.position.y + dvd.texture_size.y > windowHeight) {
+		dvd.position.y = yBelowZero ? 0.0f : windowHeight - dvd.texture_size.y;
 		dvd.direction.y *= -1;
 		return true;
 	}
 
 	return false;
-}
-
-bool DidHitCornerPerfectly(const DVD &dvd) {
-	return (
-		(dvd.position.x < PERFECT_CORNER_HIT_THRESHOLD && dvd.direction.x < 0.0f) ||
-		(dvd.position.x + dvd.texture_size.x > WINDOW_WIDTH - PERFECT_CORNER_HIT_THRESHOLD && dvd.direction.x > 0.0f) ||
-		(dvd.position.y < PERFECT_CORNER_HIT_THRESHOLD && dvd.direction.y < 0.0f) ||
-		(dvd.position.y + dvd.texture_size.y > WINDOW_HEIGHT - PERFECT_CORNER_HIT_THRESHOLD && dvd.direction.y > 0.0f)
-	);
 }
 
 int main() {
@@ -53,7 +47,8 @@ int main() {
 		.color = {255, 255, 255, 255},
 	};
 
-	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "DVD Bounce");
+	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+	InitWindow(windowWidth, windowHeight, "DVD Bounce");
 	InitAudioDevice();
 
 	/* setup logo */
@@ -67,13 +62,13 @@ int main() {
 	dvd.texture_size = {static_cast<float>(dvdLogo.width), static_cast<float>(dvdLogo.height)};
 
 	/* setup sfx */
-	const Sound perfectCornerHitSound = LoadSound("assets/applaude.mp3");
-	SetSoundVolume(perfectCornerHitSound, 1.0f);
-
 	const Sound bounceSound = LoadSound("assets/bounce.mp3");
 	SetSoundVolume(bounceSound, .5f);
 
 	while (!WindowShouldClose()) {
+		windowWidth = GetScreenWidth();
+		windowHeight = GetScreenHeight();
+
 		BeginDrawing();
 			ClearBackground({28, 26, 26, 255});
 

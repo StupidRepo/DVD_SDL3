@@ -14,7 +14,6 @@ A "simple" project which utilises Raylib to make a bouncing DVD window thingy.
 - [x] Bouncing capabilities
   - [x] Colour-changing ability
   - [x] Bounce SFX
-  - [x] SFX for when you hit a corner very near-perfectly
   - [x] No randomness so it follows the same path over and over until you resize the window to set it on a new path lol
 
 # Building
