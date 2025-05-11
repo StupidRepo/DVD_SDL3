@@ -2,7 +2,7 @@
 A "simple" project which utilises Raylib to make a bouncing DVD window thingy.
 
 # Other Branches
-- [`main`][mbranch] - The same project, made with SDL3.
+- [`sdl3`][sdlbranch] - The same project, made with SDL3.
   - [x] **NO** FPS Counter
   - [x] **MORE** lines of code
   - [x] A genuinely awful experience
@@ -22,4 +22,4 @@ This should (*hopefully*) be cross-platform on anything that Raylib supports.
 2. Do CMake stuff to build
 3. You probably need Ninja, idk
 
-[mbranch]: https://github.com/StupidRepo/DVD_SDL3/tree/main
+[sdlbranch]: https://github.com/StupidRepo/DVD_SDL3/tree/sdl3
