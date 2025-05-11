@@ -3,14 +3,10 @@ project(DVD_SDL3)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(DVD_SDL3 main.cpp)
+add_executable(DVD_SDL3 src/main.cpp)
 
-add_subdirectory(SDL)
-add_subdirectory(SDL_image)
-add_subdirectory(SDL_mixer)
+add_subdirectory(libs/raylib)
 
-target_link_libraries(DVD_SDL3 SDL3::SDL3)
-target_link_libraries(DVD_SDL3 SDL3_image::SDL3_image)
-target_link_libraries(DVD_SDL3 SDL3_mixer::SDL3_mixer)
+target_link_libraries(DVD_SDL3 PRIVATE raylib)
 
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
