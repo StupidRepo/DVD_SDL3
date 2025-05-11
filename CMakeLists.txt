@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.31)
+cmake_minimum_required(VERSION 3.30.5)
 project(DVD_RAYLIB)
 
 set(CMAKE_CXX_STANDARD 20)

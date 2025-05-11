@@ -3,7 +3,6 @@ A "simple" project which utilises Raylib to make a bouncing DVD window thingy.
 
 # Other Branches
 - [`main`][mbranch] - The same project, made with SDL3.
-  - [x] Less SFX
   - [x] **NO** FPS Counter
   - [x] **MORE** lines of code
   - [x] A genuinely awful experience
