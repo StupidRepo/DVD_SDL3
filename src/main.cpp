@@ -72,7 +72,7 @@ int main() {
 		BeginDrawing();
 			ClearBackground({28, 26, 26, 255});
 
-			DrawText(TextFormat("FPS: %i", GetFPS()), 10, 10, 20, LIGHTGRAY);
+			DrawText(TextFormat("%i FPS", GetFPS()), 10, 10, 20, LIGHTGRAY);
 			if (UpdateDVDPosition(dvd)) { // if we bounced this frame
 				dvd.color = {
 					static_cast<unsigned char>(random() % 256),
