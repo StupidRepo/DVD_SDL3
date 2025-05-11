@@ -7,7 +7,7 @@ A "simple" project which utilises Raylib to make a bouncing DVD window thingy.
   - [x] **MORE** lines of code
   - [x] A genuinely awful experience
 
-![img.png](img.png)
+![A screenshot of a window with a DVD logo in the near-topleft, and an FPS counter in the absoloute top left. The FPS counter reads "5480 FPS".](assets/img.png)
 
 # Features
 - [x] Bouncing capabilities
